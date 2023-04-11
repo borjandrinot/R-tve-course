@@ -1,0 +1,34 @@
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@200;400;500;600;700');
+
+    
+$body-bg: #BFD7EA;
+$body-color: #343434;
+$link-color: #d25000;
+$font-family-sans-serif: 'Archivo', sans-serif !default;
+$font-family-sans-serif: 'Archivo', sans-serif !default;
+
+
+$presentation-heading-color: #d25000 !default; // color headings
+$presentation-heading-font-weight: bold !default;
+$presentation-h1-font-size: 2em !default;	
+$h1-font-size: 5.8em !default;
+$h2-font-size: 1.5em !default;
+
+/*-- scss:rules --*/
+
+.reveal .slide blockquote {
+  border-left: 3px solid $text-muted;
+  padding-left: 0.5em;
+}
+
+p {
+  font-weight: 200;
+}
+
+
+
+strong {
+  color: #d25000;
+}
