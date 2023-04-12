@@ -1,0 +1,632 @@
+---
+title: "Exploración y visualización de datos con R"
+author: "Borja Andrino"
+format:
+  revealjs: 
+    theme: [default, custom.scss]
+    footer: "<strong>Borja Andrino Turón</strong> — Curso RTVE"
+
+editor: visual
+---
+
+# ¿Cómo vamos a trabajar? (hoy y el resto de sesiones)
+
+## ¿Cómo vamos a trabajar?
+
+::: columns
+::: {.column width="50%" style="margin-top: 100px;"}
+**Teoría**
+
+Vamos a usar las diapositivas del curso de los creadores de tidyverse
+:::
+
+::: {.column width="50%" style="margin-top: 100px;"}
+**Ejercicios**
+
+Ampliaremos con ejercicios más parecidos a lo que nos tocará hacer en nuestro día a día
+:::
+:::
+
+## Antes de comenzar...
+
+::: columns
+::: {.column width="50%" style="margin-top: 175px;"}
+¿Sabré R cuando acabemos este curso?
+
+### Quizá NO
+:::
+
+::: {.column width="50%" style="margin-top: 100px;"}
+![](https://media.giphy.com/media/jUwpNzg9IcyrK/giphy.gif){fig-align="center"}
+:::
+:::
+
+## Antes de comenzar...
+
+::: columns
+::: {.column width="50%" style="margin-top: 175px;"}
+¡Pero tendremos casi todas las herramientas para nuestro día a día y para seguir aprendiendo!
+:::
+
+::: {.column width="50%" style="margin-top: 100px;"}
+![](https://media.giphy.com/media/xT5LMQ8rHYTDGFG07e/giphy.gif){fig-align="center"}
+:::
+:::
+
+## Antes de comenzar...
+
+Nuestros dos mejores amigos a la hora de programar:
+
+::: columns
+::: {.column width="50%"}
+![](imgs/logo_chrome.png){fig-align="center" width="480"}
+:::
+
+::: {.column width="50%"}
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Stack_Overflow_icon.svg/768px-Stack_Overflow_icon.svg.png){fig-align="center"}
+:::
+:::
+
+## ¿Qué vamos a ver hoy?
+
+ggplot: una forma especial de pintar
+
+::: incremental
+1.  sintaxis
+2.  tipos de gráficos
+3.  scales
+4.  facets
+5.  paletas
+:::
+
+## Teoría
+
+::: columns
+::: {.column width="50%"}
+Descarga [aquí](https://www.dropbox.com/s/mftk25eut8lwypl/01-Visualize.pdf?dl=0) las diapositivas
+
+![](imgs/portada_tema.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+Y [aquí](https://www.dropbox.com/s/apmr44ko4jbr4t7/01-Visualize.Rmd?dl=0) el .Rmd con los ejercicios
+
+![](imgs/logo_rmd.png){fig-align="center" width="279"}
+:::
+:::
+
+## Vamos a hacer un juego
+
+¿Cómo conseguimos este gráfico?
+
+![](imgs/ejemplo_grafico.jpg){fig-align="center"}
+
+## 
+
+A partir de estos datos...
+
+![](imgs/ejemplo_tabla.png){fig-align="center"}
+
+## Reglas para estos ejercicios
+
+::: incremental
+-   Solo se pueden usar funciones de ggplot
+-   Sin filtros, sin mutates, nada más
+:::
+
+## 
+
+**Ejercicio 1.** A partir del dataset del Ayuntamiento de Madrid sobre tipos de salidas, haz un gráfico de barras en el que se observen los principales motivos.
+
+## 
+
+**Ejercicio 1.** A partir del dataset del Ayuntamiento de Madrid sobre tipos de salidas, haz un gráfico de barras en el que se observen los principales motivos.
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(tidyverse)
+
+url_dataset_1 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_long.csv?token=GHSAT0AAAAAACBGV6DD3CKXQYP3D4STFQ6WZBVASHA"
+
+dataset_1 <- 
+  read_csv(url_dataset_1)
+
+ggplot(dataset_1) + 
+  geom_col(aes(x = tipo_salida, y = salidas)) + 
+  coord_flip()
+
+```
+
+## 
+
+**Ejercicio 1.** A partir del dataset del Ayuntamiento de Madrid sobre tipos de salidas, haz un gráfico de barras en el que se observen los principales motivos.
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(tidyverse)
+
+url_dataset_1 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_long.csv?token=GHSAT0AAAAAACBGV6DD3CKXQYP3D4STFQ6WZBVASHA"
+
+dataset_1 <- 
+  read_csv(url_dataset_1)
+
+ggplot(dataset_1) + 
+  geom_col(aes(x = tipo_salida, y = salidas)) + 
+  coord_flip()
+
+```
+
+## 
+
+**Ejercicio 2.** Añade color a la visualización para resaltar los tipos de salidas con mayor incidencia. Cambia el título y el de los ejes, añade la fuente de los datos.
+
+## 
+
+**Ejercicio 2.** Añade color a la visualización para resaltar los tipos de salidas con mayor incidencia. Cambia el título y el de los ejes, añade la fuente de los datos.
+
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(dataset_1) + 
+  geom_col(aes(x = tipo_salida, y = salidas), 
+           fill = "#d25000") + 
+  coord_flip() + 
+  labs(x = "Número de salidas", 
+       y = "Tipo de salida", 
+       caption = "Fuente: Ayuntamiento de Madrid", 
+       title = "Salidas por tipo de incidente") + 
+  theme_minimal()
+
+```
+
+## 
+
+**Ejercicio 2.** Añade color a la visualización para resaltar los tipos de salidas con mayor incidencia. Cambia el título y el de los ejes, añade la fuente de los datos.
+
+```{r}
+#| echo: false
+#| eval: true
+
+ggplot(dataset_1) + 
+  geom_col(aes(x = tipo_salida, y = salidas), 
+           fill = "#d25000") + 
+  coord_flip() + 
+  labs(x = "Número de salidas", 
+       y = "Tipo de salida", 
+       caption = "Fuente: Ayuntamiento de Madrid", 
+       title = "Salidas por tipo de incidente") + 
+  theme_minimal()
+
+```
+
+## 
+
+**Ejercicio 3.** A partir del dataset de salidas mensuales por tipo de salida, haz un gráfico que represente la evolución mensual de estos datos
+
+## 
+
+**Ejercicio 3.** A partir del dataset de salidas mensuales por tipo de salida, haz un gráfico que represente la evolución mensual de estos datos
+
+```{r}
+#| echo: true
+#| eval: false
+
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
+
+ggplot(dataset_2) + 
+  geom_line(aes(x = date, y = salidas, color = tipo_salida),
+            size = 0.7) +
+  theme(text = element_text(family = "Roboto"))
+
+```
+
+## 
+
+**Ejercicio 3.** A partir del dataset de salidas mensuales por tipo de salida, haz un gráfico que represente la evolución mensual de estos datos
+
+```{r}
+#| echo: false
+#| eval: true 
+
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
+
+ggplot(dataset_2) + 
+  geom_line(aes(x = date, y = salidas, color = tipo_salida),
+            size = 0.7) +
+  theme(text = element_text(family = "Roboto"))
+
+```
+
+## 
+
+**Ejercicio 4.** Utiliza alguno de los parámetros del aesthetics para destacar dos tipos de salida y escribe un párrafo contando qué te llama la atención de ellos.
+
+## 
+
+**Ejercicio 4.** Utiliza alguno de los parámetros del aesthetics para destacar dos tipos de salida y escribe un párrafo contando qué te llama la atención de ellos.
+
+```{r}
+#| echo: true
+#| eval: false
+
+url_dataset_3 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_3 <- 
+  read_csv(url_dataset_3)
+
+
+ggplot(dataset_3) + 
+  geom_line(aes(x = date, 
+                y = salidas, 
+                color = tipo_salida, 
+                linetype = tipo_salida),
+            size = 0.7) +
+  scale_linetype_manual(values = c("danos_en_construccion" = "dotted",
+                                   "danos_por_agua" = "dotted",
+                                   "fuegos" = "dashed",
+                                   "incidentes_diversos" = "dotted",
+                                   "salidas_sin_intervencion" = "solid",
+                                   "salvamentos_y_rescates" = "dotted",
+                                   "servicios_varios" = "dotted")) + 
+  scale_color_manual(values = c("danos_en_construccion" = "grey",
+                                "danos_por_agua" = "grey",
+                                "fuegos" = "darkred",
+                                "incidentes_diversos" = "grey",
+                                "salidas_sin_intervencion" = "darkblue",
+                                "salvamentos_y_rescates" = "grey",
+                                "servicios_varios" = "grey")) + 
+  theme_minimal()
+```
+
+## 
+
+**Ejercicio 4.** Utiliza alguno de los parámetros del aesthetics para destacar dos tipos de salida y escribe un párrafo contando qué te llama la atención de ellos.
+
+```{r}
+#| echo: false
+#| eval: true
+
+url_dataset_3 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_3 <- 
+  read_csv(url_dataset_3)
+
+
+ggplot(dataset_3) + 
+  geom_line(aes(x = date, 
+                y = salidas, 
+                color = tipo_salida, 
+                linetype = tipo_salida),
+            size = 0.7) +
+  scale_linetype_manual(values = c("danos_en_construccion" = "dotted",
+                                   "danos_por_agua" = "dotted",
+                                   "fuegos" = "dashed",
+                                   "incidentes_diversos" = "dotted",
+                                   "salidas_sin_intervencion" = "solid",
+                                   "salvamentos_y_rescates" = "dotted",
+                                   "servicios_varios" = "dotted")) + 
+  scale_color_manual(values = c("danos_en_construccion" = "grey",
+                                "danos_por_agua" = "grey",
+                                "fuegos" = "darkred",
+                                "incidentes_diversos" = "grey",
+                                "salidas_sin_intervencion" = "darkblue",
+                                "salvamentos_y_rescates" = "grey",
+                                "servicios_varios" = "grey")) + 
+  theme_minimal()
+```
+
+## 
+
+**Ejercicio 5.** Intenta hacer el gráfico anterior, pero ahora con una interpolación por pasos. Además, añádele puntos en cada paso para observar mejor cada mes.
+
+## 
+
+**Ejercicio 5.** Intenta hacer el gráfico anterior, pero ahora con una interpolación por pasos. Además, añádele puntos en cada paso para observar mejor cada mes.
+
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(dataset_3,
+       aes(x = date, 
+           y = salidas, 
+           color = tipo_salida)) + 
+  geom_step(aes(linetype = tipo_salida),
+            size = 0.7) +
+  geom_point() + 
+  scale_linetype_manual(values = c("danos_en_construccion" = "dotted",
+                                   "danos_por_agua" = "dotted",
+                                   "fuegos" = "solid",
+                                   "incidentes_diversos" = "dotted",
+                                   "salidas_sin_intervencion" = "solid",
+                                   "salvamentos_y_rescates" = "dotted",
+                                   "servicios_varios" = "dotted")) + 
+  scale_color_manual(values = c("danos_en_construccion" = "grey",
+                                "danos_por_agua" = "grey",
+                                "fuegos" = "darkred",
+                                "incidentes_diversos" = "grey",
+                                "salidas_sin_intervencion" = "darkblue",
+                                "salvamentos_y_rescates" = "grey",
+                                "servicios_varios" = "grey"))
+
+```
+
+## 
+
+**Ejercicio 5.** Intenta hacer el gráfico anterior, pero ahora con una interpolación por pasos. Además, añádele puntos en cada paso para observar mejor cada mes.
+
+```{r}
+#| echo: false
+#| eval: true
+
+ggplot(dataset_3,
+       aes(x = date, 
+           y = salidas, 
+           color = tipo_salida)) + 
+  geom_step(aes(linetype = tipo_salida),
+            size = 0.7) +
+  geom_point() + 
+  scale_linetype_manual(values = c("danos_en_construccion" = "dotted",
+                                   "danos_por_agua" = "dotted",
+                                   "fuegos" = "solid",
+                                   "incidentes_diversos" = "dotted",
+                                   "salidas_sin_intervencion" = "solid",
+                                   "salvamentos_y_rescates" = "dotted",
+                                   "servicios_varios" = "dotted")) + 
+  scale_color_manual(values = c("danos_en_construccion" = "grey",
+                                "danos_por_agua" = "grey",
+                                "fuegos" = "darkred",
+                                "incidentes_diversos" = "grey",
+                                "salidas_sin_intervencion" = "darkblue",
+                                "salvamentos_y_rescates" = "grey",
+                                "servicios_varios" = "grey"))
+```
+
+## 
+
+**Ejercicio 6.** Representa en un gráfico el resultado total de las elecciones de Andalucía. ¿Puedes colorear por cada partido?
+
+## 
+
+**Ejercicio 6.** Representa en un gráfico el resultado total de las elecciones de Andalucía. ¿Puedes colorear por cada partido?
+
+```{r}
+#| echo: true
+#| eval: false
+
+url_dataset_4 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_total.csv"
+
+dataset_4 <- 
+  read_csv(url_dataset_4)
+
+colors <- 
+  c("PP" = "#0056a8",
+    "PSOE" = "#ef1925",
+    "VOX" = "#59c02a",
+    "xA" = "#6a2e69",
+    "AA" = "#1cc87c", 
+    "Cs" = "#fc4f00",
+    "Otros" = "#dedede")
+
+ggplot(dataset_4) + 
+  geom_col(aes(x = partido, y = votos_pc, fill = partido), 
+           color = "#343434", size = 0.2, width = 0.5) + 
+  geom_hline(yintercept = 0, size = 0.2) +
+  scale_fill_manual(values = colors) + 
+  coord_flip() + 
+  labs(title = "Resultado elecciones Andalucía", 
+       x = "Partido", y = "% de votos") + 
+  theme_minimal() 
+
+```
+
+## 
+
+**Ejercicio 6.** Representa en un gráfico el resultado total de las elecciones de Andalucía. ¿Puedes colorear por cada partido?
+
+```{r}
+#| echo: false
+#| eval: true
+
+url_dataset_4 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_total.csv"
+
+dataset_4 <- 
+  read_csv(url_dataset_4)
+
+colors <- 
+  c("PP" = "#0056a8",
+    "PSOE" = "#ef1925",
+    "VOX" = "#59c02a",
+    "xA" = "#6a2e69",
+    "AA" = "#1cc87c", 
+    "Cs" = "#fc4f00",
+    "Otros" = "#dedede")
+
+ggplot(dataset_4) + 
+  geom_col(aes(x = partido, y = votos_pc, fill = partido), 
+           color = "#343434", size = 0.2, width = 0.5) + 
+  geom_hline(yintercept = 0, size = 0.2) +
+  scale_fill_manual(values = colors) + 
+  coord_flip() + 
+  labs(title = "Resultado elecciones Andalucía", 
+       x = "Partido", y = "% de votos") + 
+  theme_minimal() 
+
+```
+
+## 
+
+**Ejercicio 7.** Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.
+
+## 
+
+**Ejercicio 7.** Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.
+
+```{r}
+#| echo: true
+#| eval: false
+
+url_dataset_5 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_provincias.csv"
+
+dataset_5 <- 
+  read_csv(url_dataset_5)
+
+ggplot(dataset_5) + 
+  geom_bar(aes(x = prov, y = votos_pc, fill = partido), 
+           stat = "identity", 
+           color = "#343434", size = 0.2, width = 0.5) + 
+  geom_hline(yintercept = 0, size = 0.2) +
+  geom_text(aes(x = prov, 
+                y = votos_pc, 
+                fill = partido, 
+                label = paste0(round(votos_pc), "%")), 
+            position = position_stack(vjust = 0.5), 
+            size = 3,
+            color = "white") + 
+  scale_fill_manual(values = colors) + 
+  coord_flip() +
+  labs(x = "Provincia", y = "% de votos") + 
+  theme_minimal()
+
+```
+
+## 
+
+**Ejercicio 7.** Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.
+
+```{r}
+#| echo: false
+#| eval: true
+
+url_dataset_5 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_provincias.csv"
+
+dataset_5 <- 
+  read_csv(url_dataset_5)
+
+ggplot(dataset_5) + 
+  geom_bar(aes(x = prov, y = votos_pc, fill = partido), 
+           stat = "identity", 
+           color = "#343434", size = 0.2, width = 0.5) + 
+  geom_hline(yintercept = 0, size = 0.2) +
+  geom_text(aes(x = prov, 
+                y = votos_pc, 
+                fill = partido, 
+                label = paste0(round(votos_pc), "%")), 
+            position = position_stack(vjust = 0.5), 
+            size = 3,
+            color = "white") + 
+  scale_fill_manual(values = colors) + 
+  coord_flip() +
+  labs(x = "Provincia", y = "% de votos") + 
+  theme_minimal()
+```
+
+## 
+
+**Ejercicio 8.** Realiza este mismo gráfico para tipo de municipio.
+
+## 
+
+**Ejercicio 8.** Realiza este mismo gráfico para tipo de municipio.
+
+```{r}
+#| echo: true
+#| eval: false
+
+url_dataset_6 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_tam_muni.csv"
+
+dataset_6 <- read_csv(url_dataset_6)
+
+dataset_6 %>% 
+  mutate(partido = fct_relevel(partido, 
+                               levels = c("PP", "VOX", "Cs", "Otros", 
+                                          "xA", "AA", "PSOE")), 
+         tipo_mun = fct_relevel(tipo_mun, 
+                                levels = c("0-500 hab.", "500-5.000 hab.", 
+                                           "5.000-50.000 hab.", "50.000-500.000 hab.",
+                                           "500.000 o más hab."))) %>% 
+  ggplot() + 
+  geom_bar(aes(x = tipo_mun, y = votos_pc, fill = partido), 
+           stat = "identity", 
+           color = "#343434", size = 0.2, width = 0.5) + 
+  geom_hline(yintercept = 0, size = 0.2) +
+  geom_text(aes(x = tipo_mun, 
+                y = votos_pc, 
+                fill = partido, 
+                label = round(votos_pc)), 
+            position = position_stack(vjust = 0.5), 
+            color = "white") + 
+  scale_fill_manual(values = colors) + 
+  coord_flip() +
+  labs(x = "Tipo municipio", y = "% de votos") + 
+  theme_minimal()
+```
+
+## 
+
+**Ejercicio 8.** Realiza este mismo gráfico para tipo de municipio.
+
+```{r}
+#| echo: false
+#| eval: true
+
+url_dataset_6 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_tam_muni.csv"
+
+dataset_6 <- read_csv(url_dataset_6)
+
+dataset_6 %>% 
+  mutate(partido = fct_relevel(partido, 
+                               levels = c("PP", "VOX", "Cs", "Otros", 
+                                          "xA", "AA", "PSOE")), 
+         tipo_mun = fct_relevel(tipo_mun, 
+                                levels = c("0-500 hab.", "500-5.000 hab.", 
+                                           "5.000-50.000 hab.", "50.000-500.000 hab.",
+                                           "500.000 o más hab."))) %>% 
+  ggplot() + 
+  geom_bar(aes(x = tipo_mun, y = votos_pc, fill = partido), 
+           stat = "identity", 
+           color = "#343434", size = 0.2, width = 0.5) + 
+  geom_hline(yintercept = 0, size = 0.2) +
+  geom_text(aes(x = tipo_mun, 
+                y = votos_pc, 
+                fill = partido, 
+                label = round(votos_pc)), 
+            position = position_stack(vjust = 0.5), 
+            color = "white") + 
+  scale_fill_manual(values = colors) + 
+  coord_flip() +
+  labs(x = "Tipo municipio", y = "% de votos") + 
+  theme_minimal()
+
+```
+
+## 
+
+**Ejercicio 9.** Con los datos del ejercicio anterior busca otro tipo de gráfico para representar el voto por tipo de municipio para cada partido
+
+## 
+
+**Ejercicio 10.** A partir de los datos por municipio de las últimas elecciones de Andalucía elige un gráfico y escribe un párrafo con alguna cuestión interesante que observes en él.

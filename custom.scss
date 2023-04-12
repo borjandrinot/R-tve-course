@@ -15,6 +15,8 @@ $presentation-heading-font-weight: bold !default;
 $presentation-h1-font-size: 2em !default;	
 $h1-font-size: 5.8em !default;
 $h2-font-size: 1.5em !default;
+$code-block-bg: #ffffff !default;
+$code-block-border-color: lighten($body-color, 30%) !default;
 
 /*-- scss:rules --*/
 
@@ -27,6 +29,14 @@ p {
   font-weight: 200;
 }
 
+li {
+  font-weight: 200;
+  margin-left: 100px;
+}
+
+.column p {
+  font-size: 0.8em;
+}
 
 
 strong {
