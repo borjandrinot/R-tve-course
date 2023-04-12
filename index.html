@@ -451,6 +451,11 @@
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="exploración-y-visualización-de-datos-con-r" class="title-slide slide level1 center">
+<h1>Exploración y visualización de datos con R</h1>
+
 </section>
 <section id="qué-vamos-a-ver-hoy" class="slide level2">
 <h2>¿Qué vamos a ver hoy?</h2>
@@ -499,8 +504,10 @@
 <h2>Reglas para estos ejercicios</h2>
 <div>
 <ul>
+<li class="fragment">Trabajaremos sobre esta <a href="https://github.com/borjandrinot/R-tve-course/blob/main/ejercicios/01-visualizacion.qmd">plantilla</a>.</li>
 <li class="fragment">Solo se pueden usar funciones de ggplot</li>
-<li class="fragment">Sin filtros, sin mutates, nada más</li>
+<li class="fragment">Sin filtros (?)</li>
+<li class="fragment">Sin mutates (?)</li>
 </ul>
 </div>
 </section>
@@ -747,14 +754,14 @@
 <span id="cb8-3"><a href="#cb8-3"></a></span>
 <span id="cb8-4"><a href="#cb8-4"></a>dataset_6 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url_dataset_6)</span>
 <span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a>dataset_6 <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6"></a>dataset_6 <span class="sc">|&gt;</span> </span>
 <span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">mutate</span>(<span class="at">partido =</span> <span class="fu">fct_relevel</span>(partido, </span>
 <span id="cb8-8"><a href="#cb8-8"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"PP"</span>, <span class="st">"VOX"</span>, <span class="st">"Cs"</span>, <span class="st">"Otros"</span>, </span>
 <span id="cb8-9"><a href="#cb8-9"></a>                                          <span class="st">"xA"</span>, <span class="st">"AA"</span>, <span class="st">"PSOE"</span>)), </span>
 <span id="cb8-10"><a href="#cb8-10"></a>         <span class="at">tipo_mun =</span> <span class="fu">fct_relevel</span>(tipo_mun, </span>
 <span id="cb8-11"><a href="#cb8-11"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0-500 hab."</span>, <span class="st">"500-5.000 hab."</span>, </span>
 <span id="cb8-12"><a href="#cb8-12"></a>                                           <span class="st">"5.000-50.000 hab."</span>, <span class="st">"50.000-500.000 hab."</span>,</span>
-<span id="cb8-13"><a href="#cb8-13"></a>                                           <span class="st">"500.000 o más hab."</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-13"><a href="#cb8-13"></a>                                           <span class="st">"500.000 o más hab."</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb8-14"><a href="#cb8-14"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb8-15"><a href="#cb8-15"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> tipo_mun, <span class="at">y =</span> votos_pc, <span class="at">fill =</span> partido), </span>
 <span id="cb8-16"><a href="#cb8-16"></a>           <span class="at">stat =</span> <span class="st">"identity"</span>, </span>

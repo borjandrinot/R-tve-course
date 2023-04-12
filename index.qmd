@@ -67,6 +67,8 @@ Nuestros dos mejores amigos a la hora de programar:
 :::
 :::
 
+# Exploración y visualización de datos con R
+
 ## ¿Qué vamos a ver hoy?
 
 ggplot: una forma especial de pintar
@@ -110,8 +112,10 @@ A partir de estos datos...
 ## Reglas para estos ejercicios
 
 ::: incremental
+-   Trabajaremos sobre esta [plantilla](https://github.com/borjandrinot/R-tve-course/blob/main/ejercicios/01-visualizacion.qmd).
 -   Solo se pueden usar funciones de ggplot
--   Sin filtros, sin mutates, nada más
+-   Sin filtros (?)
+-   Sin mutates (?)
 :::
 
 ## 
@@ -559,14 +563,14 @@ url_dataset_6 <-
 
 dataset_6 <- read_csv(url_dataset_6)
 
-dataset_6 %>% 
+dataset_6 |> 
   mutate(partido = fct_relevel(partido, 
                                levels = c("PP", "VOX", "Cs", "Otros", 
                                           "xA", "AA", "PSOE")), 
          tipo_mun = fct_relevel(tipo_mun, 
                                 levels = c("0-500 hab.", "500-5.000 hab.", 
                                            "5.000-50.000 hab.", "50.000-500.000 hab.",
-                                           "500.000 o más hab."))) %>% 
+                                           "500.000 o más hab."))) |> 
   ggplot() + 
   geom_bar(aes(x = tipo_mun, y = votos_pc, fill = partido), 
            stat = "identity", 
@@ -597,14 +601,14 @@ url_dataset_6 <-
 
 dataset_6 <- read_csv(url_dataset_6)
 
-dataset_6 %>% 
+dataset_6 |> 
   mutate(partido = fct_relevel(partido, 
                                levels = c("PP", "VOX", "Cs", "Otros", 
                                           "xA", "AA", "PSOE")), 
          tipo_mun = fct_relevel(tipo_mun, 
                                 levels = c("0-500 hab.", "500-5.000 hab.", 
                                            "5.000-50.000 hab.", "50.000-500.000 hab.",
-                                           "500.000 o más hab."))) %>% 
+                                           "500.000 o más hab."))) |> 
   ggplot() + 
   geom_bar(aes(x = tipo_mun, y = votos_pc, fill = partido), 
            stat = "identity", 
