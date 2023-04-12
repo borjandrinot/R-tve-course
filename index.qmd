@@ -67,6 +67,18 @@ Nuestros dos mejores amigos a la hora de programar:
 :::
 :::
 
+## Antes de comenzar...
+
+::: columns
+::: {.column width="30%"}
+### LA BIBLIA {.column width="50%" style="margin-top: 200px; text-align:center"}
+:::
+
+::: {.column width="70%"}
+[![](https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png){fig-align="center" width="367"}](https://r4ds.had.co.nz)
+:::
+:::
+
 # Exploración y visualización de datos con R
 
 ## ¿Qué vamos a ver hoy?
