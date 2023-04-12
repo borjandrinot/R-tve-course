@@ -280,12 +280,11 @@ ggplot(dataset_2) +
 #| echo: true
 #| eval: false
 
-url_dataset_3 <- 
+url_dataset_2 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
 
-dataset_3 <- 
-  read_csv(url_dataset_3)
-
+dataset_2 <- 
+  read_csv(url_dataset_2)
 
 ggplot(dataset_3) + 
   geom_line(aes(x = date, 
@@ -318,14 +317,14 @@ ggplot(dataset_3) +
 #| echo: false
 #| eval: true
 
-url_dataset_3 <- 
+url_dataset_2 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
 
-dataset_3 <- 
-  read_csv(url_dataset_3)
+dataset_2 <- 
+  read_csv(url_dataset_2)
 
 
-ggplot(dataset_3) + 
+ggplot(dataset_2) + 
   geom_line(aes(x = date, 
                 y = salidas, 
                 color = tipo_salida, 
@@ -360,7 +359,13 @@ ggplot(dataset_3) +
 #| echo: true
 #| eval: false
 
-ggplot(dataset_3,
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
+
+ggplot(dataset_2,
        aes(x = date, 
            y = salidas, 
            color = tipo_salida)) + 
@@ -392,7 +397,13 @@ ggplot(dataset_3,
 #| echo: false
 #| eval: true
 
-ggplot(dataset_3,
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
+
+ggplot(dataset_2,
        aes(x = date, 
            y = salidas, 
            color = tipo_salida)) + 
@@ -427,11 +438,11 @@ ggplot(dataset_3,
 #| echo: true
 #| eval: false
 
-url_dataset_4 <- 
+url_dataset_3 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_total.csv"
 
-dataset_4 <- 
-  read_csv(url_dataset_4)
+dataset_3 <- 
+  read_csv(url_dataset_3)
 
 colors <- 
   c("PP" = "#0056a8",
@@ -442,7 +453,7 @@ colors <-
     "Cs" = "#fc4f00",
     "Otros" = "#dedede")
 
-ggplot(dataset_4) + 
+ggplot(dataset_3) + 
   geom_col(aes(x = partido, y = votos_pc, fill = partido), 
            color = "#343434", size = 0.2, width = 0.5) + 
   geom_hline(yintercept = 0, size = 0.2) +
@@ -462,11 +473,11 @@ ggplot(dataset_4) +
 #| echo: false
 #| eval: true
 
-url_dataset_4 <- 
+url_dataset_3 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_total.csv"
 
-dataset_4 <- 
-  read_csv(url_dataset_4)
+dataset_3 <- 
+  read_csv(url_dataset_3)
 
 colors <- 
   c("PP" = "#0056a8",
@@ -477,7 +488,7 @@ colors <-
     "Cs" = "#fc4f00",
     "Otros" = "#dedede")
 
-ggplot(dataset_4) + 
+ggplot(dataset_3) + 
   geom_col(aes(x = partido, y = votos_pc, fill = partido), 
            color = "#343434", size = 0.2, width = 0.5) + 
   geom_hline(yintercept = 0, size = 0.2) +
@@ -491,7 +502,9 @@ ggplot(dataset_4) +
 
 ## 
 
-**Ejercicio 7.** Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.
+**Ejercicio 7.** Intenta replicar este gráfico a partir del dataset propuesto.
+
+![](imgs/resultados_provs_andalucia.png){fig-align="center"}
 
 ## 
 
@@ -501,13 +514,13 @@ ggplot(dataset_4) +
 #| echo: true
 #| eval: false
 
-url_dataset_5 <- 
+url_dataset_4 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_provincias.csv"
 
-dataset_5 <- 
-  read_csv(url_dataset_5)
+dataset_4 <- 
+  read_csv(url_dataset_4)
 
-ggplot(dataset_5) + 
+ggplot(dataset_4) + 
   geom_bar(aes(x = prov, y = votos_pc, fill = partido), 
            stat = "identity", 
            color = "#343434", size = 0.2, width = 0.5) + 
@@ -534,13 +547,13 @@ ggplot(dataset_5) +
 #| echo: false
 #| eval: true
 
-url_dataset_5 <- 
+url_dataset_4 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_provincias.csv"
 
-dataset_5 <- 
-  read_csv(url_dataset_5)
+dataset_4 <- 
+  read_csv(url_dataset_4)
 
-ggplot(dataset_5) + 
+ggplot(dataset_4) + 
   geom_bar(aes(x = prov, y = votos_pc, fill = partido), 
            stat = "identity", 
            color = "#343434", size = 0.2, width = 0.5) + 
@@ -570,12 +583,12 @@ ggplot(dataset_5) +
 #| echo: true
 #| eval: false
 
-url_dataset_6 <- 
+url_dataset_5 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_tam_muni.csv"
 
-dataset_6 <- read_csv(url_dataset_6)
+dataset_5 <- read_csv(url_dataset_5)
 
-dataset_6 |> 
+dataset_5 |> 
   mutate(partido = fct_relevel(partido, 
                                levels = c("PP", "VOX", "Cs", "Otros", 
                                           "xA", "AA", "PSOE")), 
@@ -608,12 +621,12 @@ dataset_6 |>
 #| echo: false
 #| eval: true
 
-url_dataset_6 <- 
+url_dataset_5 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_tam_muni.csv"
 
-dataset_6 <- read_csv(url_dataset_6)
+dataset_5 <- read_csv(url_dataset_5)
 
-dataset_6 |> 
+dataset_5 |> 
   mutate(partido = fct_relevel(partido, 
                                levels = c("PP", "VOX", "Cs", "Otros", 
                                           "xA", "AA", "PSOE")), 

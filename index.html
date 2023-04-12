@@ -608,34 +608,33 @@
 <h2></h2>
 <p><strong>Ejercicio 4.</strong> Utiliza alguno de los parámetros del aesthetics para destacar dos tipos de salida y escribe un párrafo contando qué te llama la atención de ellos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>url_dataset_3 <span class="ot">&lt;-</span> </span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>url_dataset_2 <span class="ot">&lt;-</span> </span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="st">"https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>dataset_3 <span class="ot">&lt;-</span> </span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">read_csv</span>(url_dataset_3)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>dataset_2 <span class="ot">&lt;-</span> </span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">read_csv</span>(url_dataset_2)</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">ggplot</span>(dataset_3) <span class="sc">+</span> </span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, </span>
-<span id="cb4-10"><a href="#cb4-10"></a>                <span class="at">y =</span> salidas, </span>
-<span id="cb4-11"><a href="#cb4-11"></a>                <span class="at">color =</span> tipo_salida, </span>
-<span id="cb4-12"><a href="#cb4-12"></a>                <span class="at">linetype =</span> tipo_salida),</span>
-<span id="cb4-13"><a href="#cb4-13"></a>            <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb4-15"><a href="#cb4-15"></a>                                   <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb4-16"><a href="#cb4-16"></a>                                   <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"dashed"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17"></a>                                   <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb4-18"><a href="#cb4-18"></a>                                   <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"solid"</span>,</span>
-<span id="cb4-19"><a href="#cb4-19"></a>                                   <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb4-20"><a href="#cb4-20"></a>                                   <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"dotted"</span>)) <span class="sc">+</span> </span>
-<span id="cb4-21"><a href="#cb4-21"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb4-22"><a href="#cb4-22"></a>                                <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb4-23"><a href="#cb4-23"></a>                                <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
-<span id="cb4-24"><a href="#cb4-24"></a>                                <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb4-25"><a href="#cb4-25"></a>                                <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>,</span>
-<span id="cb4-26"><a href="#cb4-26"></a>                                <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb4-27"><a href="#cb4-27"></a>                                <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"grey"</span>)) <span class="sc">+</span> </span>
-<span id="cb4-28"><a href="#cb4-28"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="fu">ggplot</span>(dataset_3) <span class="sc">+</span> </span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, </span>
+<span id="cb4-9"><a href="#cb4-9"></a>                <span class="at">y =</span> salidas, </span>
+<span id="cb4-10"><a href="#cb4-10"></a>                <span class="at">color =</span> tipo_salida, </span>
+<span id="cb4-11"><a href="#cb4-11"></a>                <span class="at">linetype =</span> tipo_salida),</span>
+<span id="cb4-12"><a href="#cb4-12"></a>            <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14"></a>                                   <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15"></a>                                   <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"dashed"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16"></a>                                   <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17"></a>                                   <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"solid"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18"></a>                                   <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19"></a>                                   <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"dotted"</span>)) <span class="sc">+</span> </span>
+<span id="cb4-20"><a href="#cb4-20"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21"></a>                                <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb4-22"><a href="#cb4-22"></a>                                <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23"></a>                                <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24"></a>                                <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25"></a>                                <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26"></a>                                <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"grey"</span>)) <span class="sc">+</span> </span>
+<span id="cb4-27"><a href="#cb4-27"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="section-12" class="slide level2">
@@ -651,27 +650,33 @@
 <h2></h2>
 <p><strong>Ejercicio 5.</strong> Intenta hacer el gráfico anterior, pero ahora con una interpolación por pasos. Además, añádele puntos en cada paso para observar mejor cada mes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ggplot</span>(dataset_3,</span>
-<span id="cb5-2"><a href="#cb5-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> date, </span>
-<span id="cb5-3"><a href="#cb5-3"></a>           <span class="at">y =</span> salidas, </span>
-<span id="cb5-4"><a href="#cb5-4"></a>           <span class="at">color =</span> tipo_salida)) <span class="sc">+</span> </span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> tipo_salida),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>            <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9"></a>                                   <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10"></a>                                   <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"solid"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11"></a>                                   <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12"></a>                                   <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"solid"</span>,</span>
-<span id="cb5-13"><a href="#cb5-13"></a>                                   <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14"></a>                                   <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"dotted"</span>)) <span class="sc">+</span> </span>
-<span id="cb5-15"><a href="#cb5-15"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb5-16"><a href="#cb5-16"></a>                                <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb5-17"><a href="#cb5-17"></a>                                <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
-<span id="cb5-18"><a href="#cb5-18"></a>                                <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb5-19"><a href="#cb5-19"></a>                                <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>,</span>
-<span id="cb5-20"><a href="#cb5-20"></a>                                <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
-<span id="cb5-21"><a href="#cb5-21"></a>                                <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"grey"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>url_dataset_2 <span class="ot">&lt;-</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="st">"https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>dataset_2 <span class="ot">&lt;-</span> </span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">read_csv</span>(url_dataset_2)</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="fu">ggplot</span>(dataset_2,</span>
+<span id="cb5-8"><a href="#cb5-8"></a>       <span class="fu">aes</span>(<span class="at">x =</span> date, </span>
+<span id="cb5-9"><a href="#cb5-9"></a>           <span class="at">y =</span> salidas, </span>
+<span id="cb5-10"><a href="#cb5-10"></a>           <span class="at">color =</span> tipo_salida)) <span class="sc">+</span> </span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> tipo_salida),</span>
+<span id="cb5-12"><a href="#cb5-12"></a>            <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15"></a>                                   <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>                                   <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"solid"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17"></a>                                   <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18"></a>                                   <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"solid"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19"></a>                                   <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"dotted"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20"></a>                                   <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"dotted"</span>)) <span class="sc">+</span> </span>
+<span id="cb5-21"><a href="#cb5-21"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"danos_en_construccion"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22"></a>                                <span class="st">"danos_por_agua"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23"></a>                                <span class="st">"fuegos"</span> <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
+<span id="cb5-24"><a href="#cb5-24"></a>                                <span class="st">"incidentes_diversos"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25"></a>                                <span class="st">"salidas_sin_intervencion"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26"></a>                                <span class="st">"salvamentos_y_rescates"</span> <span class="ot">=</span> <span class="st">"grey"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27"></a>                                <span class="st">"servicios_varios"</span> <span class="ot">=</span> <span class="st">"grey"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="section-15" class="slide level2">
@@ -687,11 +692,11 @@
 <h2></h2>
 <p><strong>Ejercicio 6.</strong> Representa en un gráfico el resultado total de las elecciones de Andalucía. ¿Puedes colorear por cada partido?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>url_dataset_4 <span class="ot">&lt;-</span> </span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>url_dataset_3 <span class="ot">&lt;-</span> </span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="st">"https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_total.csv"</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a>dataset_4 <span class="ot">&lt;-</span> </span>
-<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">read_csv</span>(url_dataset_4)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>dataset_3 <span class="ot">&lt;-</span> </span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">read_csv</span>(url_dataset_3)</span>
 <span id="cb6-6"><a href="#cb6-6"></a></span>
 <span id="cb6-7"><a href="#cb6-7"></a>colors <span class="ot">&lt;-</span> </span>
 <span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">c</span>(<span class="st">"PP"</span> <span class="ot">=</span> <span class="st">"#0056a8"</span>,</span>
@@ -702,7 +707,7 @@
 <span id="cb6-13"><a href="#cb6-13"></a>    <span class="st">"Cs"</span> <span class="ot">=</span> <span class="st">"#fc4f00"</span>,</span>
 <span id="cb6-14"><a href="#cb6-14"></a>    <span class="st">"Otros"</span> <span class="ot">=</span> <span class="st">"#dedede"</span>)</span>
 <span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="fu">ggplot</span>(dataset_4) <span class="sc">+</span> </span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="fu">ggplot</span>(dataset_3) <span class="sc">+</span> </span>
 <span id="cb6-17"><a href="#cb6-17"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> partido, <span class="at">y =</span> votos_pc, <span class="at">fill =</span> partido), </span>
 <span id="cb6-18"><a href="#cb6-18"></a>           <span class="at">color =</span> <span class="st">"#343434"</span>, <span class="at">size =</span> <span class="fl">0.2</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb6-19"><a href="#cb6-19"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
@@ -720,19 +725,20 @@
 <img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
 <section id="section-19" class="slide level2">
 <h2></h2>
-<p><strong>Ejercicio 7.</strong> Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.</p>
-</section>
+<p><strong>Ejercicio 7.</strong> Intenta replicar este gráfico a partir del dataset propuesto.</p>
+
+<img data-src="imgs/resultados_provs_andalucia.png" class="r-stretch quarto-figure-center"></section>
 <section id="section-20" class="slide level2">
 <h2></h2>
 <p><strong>Ejercicio 7.</strong> Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>url_dataset_5 <span class="ot">&lt;-</span> </span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>url_dataset_4 <span class="ot">&lt;-</span> </span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="st">"https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_provincias.csv"</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>dataset_5 <span class="ot">&lt;-</span> </span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">read_csv</span>(url_dataset_5)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>dataset_4 <span class="ot">&lt;-</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">read_csv</span>(url_dataset_4)</span>
 <span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="fu">ggplot</span>(dataset_5) <span class="sc">+</span> </span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="fu">ggplot</span>(dataset_4) <span class="sc">+</span> </span>
 <span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> prov, <span class="at">y =</span> votos_pc, <span class="at">fill =</span> partido), </span>
 <span id="cb7-9"><a href="#cb7-9"></a>           <span class="at">stat =</span> <span class="st">"identity"</span>, </span>
 <span id="cb7-10"><a href="#cb7-10"></a>           <span class="at">color =</span> <span class="st">"#343434"</span>, <span class="at">size =</span> <span class="fl">0.2</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
@@ -763,12 +769,12 @@
 <h2></h2>
 <p><strong>Ejercicio 8.</strong> Realiza este mismo gráfico para tipo de municipio.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>url_dataset_6 <span class="ot">&lt;-</span> </span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>url_dataset_5 <span class="ot">&lt;-</span> </span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="st">"https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_tam_muni.csv"</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a>dataset_6 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url_dataset_6)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>dataset_5 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url_dataset_5)</span>
 <span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a>dataset_6 <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6"></a>dataset_5 <span class="sc">|&gt;</span> </span>
 <span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">mutate</span>(<span class="at">partido =</span> <span class="fu">fct_relevel</span>(partido, </span>
 <span id="cb8-8"><a href="#cb8-8"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"PP"</span>, <span class="st">"VOX"</span>, <span class="st">"Cs"</span>, <span class="st">"Otros"</span>, </span>
 <span id="cb8-9"><a href="#cb8-9"></a>                                          <span class="st">"xA"</span>, <span class="st">"AA"</span>, <span class="st">"PSOE"</span>)), </span>

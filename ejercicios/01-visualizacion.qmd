@@ -9,11 +9,23 @@ editor: visual
 
 ```{r}
 
+url_dataset_1 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_long.csv?token=GHSAT0AAAAAACBGV6DD3CKXQYP3D4STFQ6WZBVASHA"
+
+dataset_1 <- 
+  read_csv(url_dataset_1)
+
 ```
 
 **Ejercicio 2**. Añade color a la visualización para resaltar los tipos de salidas con mayor incidencia. Cambia el título y el de los ejes, añade la fuente de los datos.
 
 ```{r}
+
+url_dataset_1 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_long.csv?token=GHSAT0AAAAAACBGV6DD3CKXQYP3D4STFQ6WZBVASHA"
+
+dataset_1 <- 
+  read_csv(url_dataset_1)
 
 ```
 
@@ -21,27 +33,49 @@ editor: visual
 
 ```{r}
 
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
 ```
 
 **Ejercicio 4**. Utiliza alguno de los parámetros del aesthetics para destacar dos tipos de salida y escribe un párrafo contando qué te llama la atención de ellos.
 
 ```{r}
 
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
 ```
 
 **Ejercicio 5**. Intenta hacer el gráfico anterior, pero ahora con una interpolación por pasos. Además, añádele puntos en cada paso para observar mejor cada mes.
 
 ```{r}
 
+url_dataset_2 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_monthly.csv"
+
+dataset_2 <- 
+  read_csv(url_dataset_2)
 ```
 
 **Ejercicio 6**. Representa en un gráfico el resultado total de las elecciones de Andalucía. ¿Puedes colorear por cada partido?
 
 ```{r}
 
+url_dataset_3 <- 
+  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/2022_andalucia_voto_total.csv"
+
+dataset_3 <- 
+  read_csv(url_dataset_3)
 ```
 
-**Ejercicio 7**. Intenta replicar este gráfico a partir de los datasets que hemos adjuntado para esta práctica.
+**Ejercicio 7.** Intenta replicar este gráfico a partir del dataset propuesto.
+
+![](images/resultados_provs_andalucia.png)
 
 ```{r}
 
