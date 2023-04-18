@@ -1,0 +1,291 @@
+---
+title: "Ejemplos"
+author: "Borja Andrino"
+format: html
+editor: visual
+---
+
+### Factors
+
+Vamos a hacer este gráfico
+
+![](imgs/ejemplo_1.png)
+
+```{r}
+
+votos_munis <-
+  read_csv("data_raw/2022_andalucia_voto_municipios.csv")
+
+colors <- 
+  c(PP = "#008BD6", 
+    PSOE = "#ED1C24", 
+    xA = "#6A2E68", 
+    IU = "#A93226", 
+    Cs = "#FA5000", 
+    VOX =	"#5AC035", 
+    AA = "#A3C940")
+
+votos_munis %>% 
+  group_by(partido) %>% 
+  summarise(votos = sum(votos_partido)) %>% 
+  ungroup() %>% 
+  mutate(partido = fct_reorder(partido, votos)) %>% 
+  ggplot() +  
+  geom_col(aes(x = partido, y = votos, fill = partido)) +
+  scale_fill_manual(values = colors) +
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none")
+
+votos_totales <- 
+  votos_munis %>% 
+  mutate(election = "2022") %>% 
+  group_by(partido, election) %>% 
+  summarise(votos = sum(votos_partido)) %>% 
+  ungroup() %>% 
+  mutate(votos_pc = votos / sum(votos))
+
+
+votos_totales %>% 
+  mutate(partido = fct_relevel(partido, 
+                               levels = c("xA", "AA", "PSOE", 
+                                          "Otros", "Cs", "PP", "VOX")) %>% 
+           fct_rev()) %>% 
+  ggplot() +  
+  geom_bar(aes(x = election, 
+               y = votos_pc, 
+               fill = partido), 
+           position = position_stack(), stat = "identity") +
+  geom_hline(yintercept = 0.5) + 
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(breaks = c(0.5), 
+                     labels = scales::percent) +
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+### Tratamiento cadenas texto
+
+```{r}
+
+data_raw <- 
+  tribble(~id, ~calificacion, 
+          "2022_pepe_jimenez_2023", 7,
+          "1963_eva_maria_se_fue", 9)
+
+```
+
+Vamos a separar el año y el nombre en esta base de datos de alumnos
+
+```{r}
+
+data_raw %>% 
+  mutate(year = str_sub(id, 1, 4), 
+         year_regexp = str_extract(id, "^\\d{4}"),
+         name = str_sub(id, 5, -1), 
+         name_2 = str_remove_all(name, year), 
+         name = str_replace_all(name, "_", " "), 
+         name = str_trim(name), 
+         name = str_to_title(name))
+
+```
+
+Ahora algo más complejo. Vamos a estandarizar estos nombres de municipios.
+
+```{r}
+
+dict_codigos <- 
+  tribble(~codigo_mun, ~mun, 
+          00001, "Palmas, Las", 
+          00002, "Alicante/Alacant")
+
+```
+
+```{r}
+
+dict_codigos %>% 
+  mutate(preffix = str_extract(mun, ",\\s*\\w+"),
+         principal = str_remove_all(mun, preffix),
+         preffix = str_remove_all(preffix, "[,\\s]"),
+         mun_recoded = str_glue("{preffix} {principal}")) %>% 
+  View()
+
+dict_codigos %>% 
+  mutate(preffix = str_extract(mun, ",\\s*\\w+"),
+         principal = str_remove_all(mun, preffix),
+         preffix = str_remove_all(preffix, "[,\\s]"), 
+         mun_recoded = 
+           case_when(
+             str_detect(mun, ",") ~ str_glue("{preffix} {principal}"), 
+             str_detect(mun, "/") ~ str_remove_all(mun, "/\\w+"), 
+             T ~ mun)) %>% 
+  View()
+
+
+```
+
+### Joins
+
+```{r}
+require(tidyverse)
+
+munis <- tribble(~mun, ~ccaa,
+          "Madrid", "Madrid",
+          "Barcelona", "Cataluña",
+          "Valencia", "C. Valenciana")
+
+censo <- tribble(~mun, ~censo,
+          "Madrid", "3.2",
+          "Barcelona", "1.6",
+          "Alicante", "0.8")
+
+munis 
+censo 
+
+```
+
+### Fechas
+
+¿Por qué son importantes?
+
+```{r}
+
+library(lubridate) 
+
+to_plot <- tribble(~partido, ~date, ~votes_pc, 
+                   "PP", "2019-11-10", 24,
+                   "PP", "2022-02-10", 19,
+                   "PP", "2023-04-16", 28,
+                   "PSOE", "2019-11-10", 28,
+                   "PSOE", "2022-02-10", 30,
+                   "PSOE", "2023-04-16", 25)
+
+to_plot %>% 
+  ggplot() + 
+  geom_line(aes(x = date, y = votes_pc, group = partido, color = partido)) + 
+  geom_point(aes(x = date, y = votes_pc, color = partido)) + 
+  scale_color_manual(values = colors) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+```
+
+```{r}
+
+to_plot <- tribble(~partido, ~date, ~votes_pc, 
+                   "PP", "2019-11-10", 24,
+                   "PP", "2022-02-10", 19,
+                   "PP", "2023-04-16", 28,
+                   "PSOE", "2019-11-10", 28,
+                   "PSOE", "2022-02-10", 30,
+                   "PSOE", "2023-04-16", 25) %>% 
+  mutate(date = ymd(date))
+
+date_breaks <- 
+  to_plot %>% 
+  distinct(date) %>% 
+  pull(date)
+
+to_plot %>% 
+  ggplot() + 
+  geom_line(aes(x = date, y = votes_pc, group = partido, color = partido)) + 
+  geom_point(aes(x = date, y = votes_pc, color = partido)) + 
+  scale_color_manual(values = colors) +
+  scale_x_date(breaks = date_breaks, 
+               date_labels = "%b %y") + 
+  scale_y_continuous(limits = c(0, 50)) + 
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+### Left join
+
+```{r}
+
+munis %>%
+  left_join(censo, by = "mun")
+
+```
+
+### Right join
+
+```{r}
+
+munis %>%
+  right_join(censo)
+
+```
+
+### Full join
+
+```{r}
+
+munis %>%
+  full_join(censo)
+
+```
+
+### Inner join
+
+```{r}
+
+munis %>%
+  inner_join(censo)
+
+```
+
+### Anti join
+
+```{r}
+
+munis %>%
+  anti_join(censo)
+
+```
+
+### ¿Las claves se llaman distinto?
+
+```{r}
+
+datos <- tribble(~municipio, ~A, ~B, ~C,
+          "Madrid", "Sí", 3.2, 1,
+          "Barcelona", "No", 1.3, 2,
+          "Alicante", "No", 2, NA)
+
+munis %>%
+  rename(municipio = mun) %>% 
+  left_join(datos)
+
+munis %>%
+  left_join(datos, by = c("mun" = "municipio"))
+
+```
+
+### ¿Sufijos?
+
+```{r}
+
+est_mujeres <- tribble( ~universidad, ~estudiantes, 
+                        "UC3M", 18000, 
+                        "UAM", 1800)
+
+est_hombres <- tribble( ~universidad, ~estudiantes, 
+                        "UC3M", 1000, 
+                        "UAM", 18000 )
+
+est_mujeres
+est_hombres
+
+```
+
+```{r}
+est_mujeres %>%
+  inner_join( est_hombres,
+              by = "universidad",
+              suffix = c( "_mujeres", "_hombres"))
+
+```
