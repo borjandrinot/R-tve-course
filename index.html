@@ -1048,10 +1048,264 @@
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="funciones-en-r-y-bucles" class="title-slide slide level1 center">
+<h1>Funciones en R y bucles</h1>
+
+</section>
+<section id="qué-vamos-a-ver-hoy-2" class="slide level2">
+<h2>¿Qué vamos a ver hoy?</h2>
+<div>
+<ol type="1">
+<li class="fragment">qué es una función</li>
+<li class="fragment">nuestra primera función</li>
+<li class="fragment">map y walk</li>
+</ol>
+</div>
+</section>
+<section id="teoría-2" class="slide level2">
+<h2>Teoría</h2>
+<p>Descarga <a href="https://www.dropbox.com/s/4tvwtua9rntbn26/06-Iteration.pdf?dl=0">aquí</a> las diapositivas sobre iteración y sus <a href="https://www.dropbox.com/s/w0dn0fucvfrt78m/06-Iterate.Rmd?dl=0">ejercicios</a></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imgs/portada_tema.png"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imgs/logo_rmd.png" width="279"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="api-datawrapper" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><strong>Instalación y configuración</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">install.packages</span>(<span class="st">"DatawRappr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Más información en el <a href="https://github.com/munichrocker/DatawRappr">github</a> del creador del paquete</p>
+</div>
+</div>
+</section>
+<section id="api-datawrapper-1" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><strong>Instalación y configuración</strong></p>
+<p>Tenemos que crear un token secreto que servirá para identificarnos como usuarios cuando interactuemos con la API:<br>
+<img data-src="imgs/dw_1.png"></p>
+</section>
+<section id="api-datawrapper-2" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><strong>Instalación y configuración</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Es importante elegir bien los <strong>scopes</strong>, que son los privilegios que tendrá el usuario de ese token. Puede haber diferentes niveles: alguien que solo pueda hacer gráficos pero no moverlos o que no pueda gestionar a los usuarios del equipo:</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="imgs/dw_2.png"></p>
+</div>
+</div>
+</section>
+<section id="api-datawrapper-3" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><strong>Algunas funciones básicas</strong></p>
+<div>
+<ul>
+<li class="fragment">dw_create_chart</li>
+<li class="fragment">dw_copy_chart</li>
+<li class="fragment">dw_data_to_chart</li>
+<li class="fragment">dw_edit_chart</li>
+<li class="fragment">dw_publish_chart</li>
+</ul>
+</div>
+</section>
+<section id="api-datawrapper-4" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><span style="font-size: 80%;">Primero creamos una carpeta y a continuación un gráfico. <a href="https://developer.datawrapper.de/docs/chart-types">Aquí</a> el detalle de los tipos de gráficos.</span></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">library</span>(DatawRappr)</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="fu">datawrapper_auth</span>(<span class="st">"8TbVVC5i4j6rkG0kgnGOJxQB2PbgDAKKoULokwjNoInrqvHYVa3aArZrwLnQgah5"</span>, </span>
+<span id="cb17-5"><a href="#cb17-5"></a>                 <span class="at">overwrite =</span> T)</span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a>my_new_folder <span class="ot">&lt;-</span> </span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="fu">dw_create_folder</span>(<span class="st">"Mis primeros gráficos"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a>my_new_chart  <span class="ot">&lt;-</span> </span>
+<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">dw_create_chart</span>(<span class="at">title =</span> <span class="st">"Un gráfico de puntos"</span>, </span>
+<span id="cb17-12"><a href="#cb17-12"></a>                  <span class="at">type =</span> <span class="st">"d3-scatter-plot"</span>)</span>
+<span id="cb17-13"><a href="#cb17-13"></a></span>
+<span id="cb17-14"><a href="#cb17-14"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb17-15"><a href="#cb17-15"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-16"><a href="#cb17-16"></a>  <span class="fu">dw_data_to_chart</span>(my_new_chart<span class="sc">$</span>id) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="api-datawrapper-5" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><span style="font-size: 80%;">Ahora modificamos algunos parámetros del gráfico. Esto es un poco tedioso, pero podemos explorar el objeto con los metadatos del gráfico.</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>metadata <span class="ot">&lt;-</span> </span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">dw_retrieve_chart_metadata</span>(my_new_chart<span class="sc">$</span>id)</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>colors <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"setosa"</span> <span class="ot">=</span> <span class="st">"#A0EADE"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>               <span class="st">"virginica"</span> <span class="ot">=</span> <span class="st">"#5C6784"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>               <span class="st">"versicolor"</span> <span class="ot">=</span> <span class="st">"#E18335"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a>visualize <span class="ot">&lt;-</span> metadata<span class="sc">$</span>content<span class="sc">$</span>metadata<span class="sc">$</span>visualize</span>
+<span id="cb18-9"><a href="#cb18-9"></a>visualize<span class="sc">$</span><span class="st">`</span><span class="at">color-category</span><span class="st">`</span><span class="sc">$</span>map <span class="ot">&lt;-</span> colors</span>
+<span id="cb18-10"><a href="#cb18-10"></a>visualize<span class="sc">$</span>tooltip<span class="sc">$</span>body <span class="ot">&lt;-</span> <span class="st">"{{petal_length}}"</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a></span>
+<span id="cb18-12"><a href="#cb18-12"></a><span class="fu">dw_edit_chart</span>(my_new_chart<span class="sc">$</span>id, </span>
+<span id="cb18-13"><a href="#cb18-13"></a>              <span class="at">folderId =</span> my_new_folder<span class="sc">$</span>id, </span>
+<span id="cb18-14"><a href="#cb18-14"></a>              <span class="at">visualize =</span> visualize,</span>
+<span id="cb18-15"><a href="#cb18-15"></a>              <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="st">"petal_length"</span>, </span>
+<span id="cb18-16"><a href="#cb18-16"></a>                          <span class="at">y =</span> <span class="st">"petal_width"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="api-datawrapper-6" class="slide level2">
+<h2>API Datawrapper</h2>
+<p><span style="font-size: 80%;">Por último, publicamos el gráfico y nos traemos su url (también los códigos de iframe). Esta función también sirve para <strong>republicar</strong> el gráfico.</span></p>
+<div class="columns">
+<div class="column" style="margin-top:150px;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>my_new_chart_publish_data <span class="ot">&lt;-</span> </span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">dw_publish_chart</span>(my_new_chart<span class="sc">$</span>id, <span class="at">return_object =</span> T)</span>
+<span id="cb19-3"><a href="#cb19-3"></a></span>
+<span id="cb19-4"><a href="#cb19-4"></a>knitr<span class="sc">::</span><span class="fu">include_url</span>(my_new_chart_publish_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<iframe src="https://datawrapper.dwcdn.net/uLUZZ/2/" width="960" height="500" data-external="1">
+</iframe>
+</div>
+</div>
+</div>
 </section>
 <section id="ejercicios" class="slide level2">
 <h2>Ejercicios</h2>
-<div class="footer footer-default">
+<p>Repite este gráfico, pero ahora en Datawrapper desde R.</p>
+
+<img data-src="imgs/dw_3.png" class="r-stretch quarto-figure-center"></section>
+<section id="web-scraping" class="slide level2">
+<h2>Web scraping</h2>
+<div class="columns">
+<div class="column" style="margin-top:200px;">
+<p>Necesitamos instalar la librería <strong>rvest</strong>. <a href="https://rvest.tidyverse.org">Aquí</a> podemos encontrar toda su documentación.</p>
+</div><div class="column" style="margin-top:200px;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://rvest.tidyverse.org/logo.png"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="web-scraping-1" class="slide level2">
+<h2>Web scraping</h2>
+<div class="columns">
+<div class="column" style="margin-top:150px;">
+<p>Cada página web se estructura como un árbol anidado. Dada nodo de ese árbol es de un tipo (según el tag que lo abra) y tiene varios atributos. Entre ellos, los más importantes son el <strong>id</strong> y la <strong>clase css</strong>.</p>
+</div><div class="column" style="margin-top:150px;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://www.w3schools.com/js/pic_htmltree.gif"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="web-scraping-2" class="slide level2">
+<h2>Web scraping</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Leemos el código html de la web concreta con la función <strong>read_html</strong>. El resultado será un set de nodos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>page_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa677996afc6f510VgnVCM1000001d4a900aRCRD&amp;vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="fu">class</span>(page_html)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "xml_document" "xml_node"    </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imgs/scraping_1.png"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="web-scraping-3" class="slide level2">
+<h2>Web scraping</h2>
+
+<img data-src="imgs/scraping_2.png" class="r-stretch quarto-figure-center"></section>
+<section id="web-scraping-4" class="slide level2">
+<h2>Web scraping</h2>
+<p><span style="font-size:80%;">Ahora sé que me interesan todos los nodos con tag <strong>a</strong> que tienen clase css <strong>ico-csv</strong>. Para encontrarlos puedo usar la función <strong>html_elements</strong>.</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>page_html <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">html_elements</span>(<span class="st">"a.ico-csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><span style="font-size:80%;">Y a partir de ese set de nodos li puedo tratar de sacar la url a la que apuntan:</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>page_html <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">html_elements</span>(<span class="st">"a.ico-csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">html_attr</span>(<span class="st">"href"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/egob/catalogo/300177-12-bomberos-actuaciones.csv"
+[2] "/egob/catalogo/300177-10-bomberos-actuaciones.csv"
+[3] "/egob/catalogo/300177-8-bomberos-actuaciones.csv" 
+[4] "/egob/catalogo/300177-6-bomberos-actuaciones.csv" 
+[5] "/egob/catalogo/300177-4-bomberos-actuaciones.csv" 
+[6] "/egob/catalogo/300177-2-bomberos-actuaciones.csv" 
+[7] "/egob/catalogo/300177-1-bomberos-actuaciones.csv" </code></pre>
+</div>
+</div>
+</section>
+<section id="web-scraping-5" class="slide level2">
+<h2>Web scraping</h2>
+<p>Pruebo ahora a sacar los datos de la clasificación de primera división en web del diario deportivo As.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">read_html</span>(<span class="st">"https://resultados.as.com/resultados/futbol/primera/clasificacion/"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">html_elements</span>(<span class="st">"table.tabla-datos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Parece que no podemos aislar esta tabla y necesitamos precisar más. Una opción es usar el <strong>xpath</strong> de ese nodo. Además podemos usar la función <strong>html_table</strong> para pasar esa información a tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">read_html</span>(<span class="st">"https://resultados.as.com/resultados/futbol/primera/clasificacion/"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">html_element</span>(<span class="at">xpath =</span> <span class="st">'//*[@id="clasificacion-total"]/div/div/table'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">html_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicios-1" class="slide level2">
+<h2>Ejercicios</h2>
+<p><strong>Ejercicio 1.</strong> Limpia la tabla anterior para que aparezca tal y como la encontramos en la web.</p>
+<p><strong>Ejercicio 2.</strong> Lee todos los datos de salidas de bomberos para disponibles en la página web del ayuntamiento de Madrid.</p>
+<p><strong>Ejercicio 3.</strong> Imagina que no tuviésemos datos sobre el año dentro de cada csv. ¿Habría alguna forma de obtenerlo?</p>
+</section>
+<section id="ejercicios-extra" class="slide level2">
+<h2>Ejercicios extra</h2>
+<p><strong>Ejercicio 1.</strong> Vamos a intentar hacer este gráfico a partir de estos datos:</p>
+
+<img data-src="imgs/contaminacion_a.jpg" width="786" class="r-stretch quarto-figure-center"></section>
+<section id="ejercicios-extra-1" class="slide level2">
+<h2>Ejercicios extra</h2>
+<p><strong>Ejercicio 2.</strong> Ahora este otro:</p>
+
+<img data-src="imgs/contaminacion_b.jpg" width="786" class="r-stretch quarto-figure-center"><div class="footer footer-default">
 <p><strong>Borja Andrino Turón</strong> — Curso RTVE</p>
 </div>
 </section></section>

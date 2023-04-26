@@ -9,11 +9,24 @@ editor: visual
 
 ```{r}
 
+library(tidyverse)
+
 url_dataset_1 <- 
   "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_long.csv?token=GHSAT0AAAAAACBGV6DD3CKXQYP3D4STFQ6WZBVASHA"
 
 dataset_1 <- 
   read_csv(url_dataset_1)
+
+to_plot <- 
+  dataset_1 %>% 
+  group_by(tipo_salida) %>% 
+  summarise(salidas = sum(salidas)) %>% 
+  ungroup()
+
+ggplot(to_plot) +
+  geom_col(aes(x = tipo_salida, y = salidas)) +
+  coord_flip() +
+  theme_minimal()
 
 ```
 
@@ -21,11 +34,22 @@ dataset_1 <-
 
 ```{r}
 
-url_dataset_1 <- 
-  "https://raw.githubusercontent.com/borjandrinot/R-tve-course/main/data_raw/data_bomberos_long.csv?token=GHSAT0AAAAAACBGV6DD3CKXQYP3D4STFQ6WZBVASHA"
-
-dataset_1 <- 
-  read_csv(url_dataset_1)
+ggplot(to_plot) + 
+  geom_col(aes(x = tipo_salida, y = salidas,
+               fill = salidas)) +
+  geom_hline(yintercept = 0) + 
+  scale_fill_distiller(palette = "OrRd", direction = 1) +
+  labs(title = "Salidas de los bomberos de Madrid en 2022", 
+       caption = "Ayuntamiento de Madrid", 
+       x = "", y = "") + 
+  coord_flip() +
+  theme_minimal() +
+  theme(plot.title.position = "plot", 
+        plot.caption.position = "plot",
+        plot.caption = element_text(color = "#ababab", 
+                                    hjust = 0),
+        plot.title = element_text(face = "bold", 
+                                  size = 10))
 
 ```
 
@@ -38,6 +62,18 @@ url_dataset_2 <-
 
 dataset_2 <- 
   read_csv(url_dataset_2)
+
+dataset_2 %>% 
+  ggplot() + 
+  geom_line(aes(x = date, y = salidas, 
+                group = tipo_salida)) +
+  geom_hline(yintercept = 0, size = 0.3) +
+  geom_vline(xintercept = ymd("2022-06-01"), 
+             size = 0.3, 
+             color = "red") +
+  theme_minimal()
+
+
 ```
 
 **Ejercicio 4**. Utiliza alguno de los parámetros del aesthetics para destacar dos tipos de salida y escribe un párrafo contando qué te llama la atención de ellos.
@@ -49,6 +85,44 @@ url_dataset_2 <-
 
 dataset_2 <- 
   read_csv(url_dataset_2)
+
+
+dataset_2 %>% 
+  distinct(tipo_salida)
+
+dataset_2 %>% 
+  ggplot() + 
+  geom_line(aes(x = date, y = salidas, 
+                group = tipo_salida, color = tipo_salida, 
+                linetype = tipo_salida, size = tipo_salida)) +
+  geom_hline(yintercept = 0, size = 0.3) +
+  scale_color_manual(values = c("danos_en_construccion" = "grey",
+                                "danos_por_agua" = "darkblue",
+                                "fuegos" = "darkred",
+                                "incidentes_diversos" = "grey",
+                                "salidas_sin_intervencion" = "grey",
+                                "salvamentos_y_rescates" = "grey",
+                                "servicios_varios" = "grey")) +
+  scale_linetype_manual(values = c("danos_en_construccion" = "solid",
+                                   "danos_por_agua" = "dashed",
+                                   "fuegos" = "dotted",
+                                   "incidentes_diversos" = "dotted",
+                                   "salidas_sin_intervencion" = "dotted",
+                                   "salvamentos_y_rescates" = "dotted",
+                                   "servicios_varios" = "dashed")) + 
+  scale_size_manual(values = c("danos_en_construccion" = 1,
+                               "danos_por_agua" = 1,
+                               "fuegos" = 0.5,
+                               "incidentes_diversos" = 0.5,
+                               "salidas_sin_intervencion" = 0.5,
+                               "salvamentos_y_rescates" = 0.5,
+                               "servicios_varios" = 0.5)) + 
+  
+  theme_minimal()
+
+
+
+
 ```
 
 **Ejercicio 5**. Intenta hacer el gráfico anterior, pero ahora con una interpolación por pasos. Además, añádele puntos en cada paso para observar mejor cada mes.
@@ -60,6 +134,21 @@ url_dataset_2 <-
 
 dataset_2 <- 
   read_csv(url_dataset_2)
+
+dataset_2 %>% 
+  ggplot(aes(x = date, y = salidas, color = tipo_salida)) + 
+  geom_step(aes(group = tipo_salida)) +
+  geom_point() + 
+  geom_hline(yintercept = 0, size = 0.3) +
+  scale_color_manual(values = c("danos_en_construccion" = "grey",
+                                "danos_por_agua" = "darkblue",
+                                "fuegos" = "darkred",
+                                "incidentes_diversos" = "grey",
+                                "salidas_sin_intervencion" = "grey",
+                                "salvamentos_y_rescates" = "grey",
+                                "servicios_varios" = "grey")) +
+  theme_minimal()
+
 ```
 
 **Ejercicio 6**. Representa en un gráfico el resultado total de las elecciones de Andalucía. ¿Puedes colorear por cada partido?
@@ -71,6 +160,14 @@ url_dataset_3 <-
 
 dataset_3 <- 
   read_csv(url_dataset_3)
+
+dataset_3 %>% 
+  ggplot() + 
+  geom_col(aes(x = partido, y = votos_pc, fill = partido)) +
+  scale_fill_manual(values = c("PP" = "blue")) +
+  coord_flip() +
+  theme_minimal()
+
 ```
 
 **Ejercicio 7.** Intenta replicar este gráfico a partir del dataset propuesto.
