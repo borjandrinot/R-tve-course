@@ -289,3 +289,198 @@ est_mujeres %>%
               suffix = c( "_mujeres", "_hombres"))
 
 ```
+
+## Función
+
+```{r}
+
+library(tidyverse)
+
+add_3 <- function(any_number = -3){
+  
+  new_number <- any_number + 3
+  return(new_number)
+  
+}
+
+add_3 <- function(any_number = -3){
+  output <- any_number + 3
+  output
+}
+
+
+add_3(5)
+
+mi_division <- function(numerador, denominador){
+  
+  output <- numerador / denominador
+
+  output %>% 
+    round(2)
+  
+}
+
+mi_division(8, 4)
+
+
+x <- tibble(x1 = runif(1000, 0, 100), x2 = runif(1000, 0, 10))
+
+
+x %>% 
+  mutate(x1_div_x2 = mi_division(x1, x2)) 
+
+```
+
+```{r}
+
+url <- 
+  "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"
+
+data_raw <- 
+  read_csv(url, na = "")
+
+prepare_totales <- function(p_data){
+  
+  p_data %>% 
+    summarise(num_casos = sum(num_casos, na.rm = T)) %>% 
+    pull(num_casos)
+  
+  
+}
+
+
+prepare_totales_prov <- function(p_data){
+  
+  
+  p_data %>% 
+    group_by(provincia_iso) %>% 
+    summarise(across(starts_with("num_"),
+                     ~ sum(., na.rm = T))) %>% 
+    ungroup()
+  
+  
+}
+
+
+prepare_totales_prov <- function(p_data){
+  
+  p_data %>% 
+    pivot_longer(starts_with("num_"), 
+                 names_to = "indicador", 
+                 values_to = "valor") %>% 
+    group_by(provincia_iso, indicador) %>% 
+    summarise(valor = sum(valor)) %>% 
+    ungroup() %>% 
+    pivot_wider(id_cols = provincia_iso, 
+                names_from = indicador, 
+                values_from  = valor)
+  
+}
+
+prepare_totales(data_raw)
+
+
+datos_provs <- prepare_totales_prov(data_raw)
+
+
+to_plot <- 
+datos_provs_filtered <- 
+  datos_provs
+rm(data_raw)
+gc()
+
+```
+
+Mapas
+```{r}
+
+library(tidyverse)
+library(sf)
+
+
+map_munis <- read_sf("https://raw.githubusercontent.com/LuisSevillano/spanish-topojson-files/master/with-names/municipalities.json")
+map_munis <- read_sf("data/map_munis.geojson")
+
+datos_elecciones_raw <- 
+  read_csv("data_raw/2022_andalucia_voto_municipios.csv") 
+
+
+# estrategia 1
+datos_elecciones_pc <- 
+  datos_elecciones_raw %>% 
+  pivot_wider(id_cols = c(codigo_mun, mun, part),
+              names_from = partido, 
+              values_from = votos_pc)
+
+datos_elecciones_abs <- 
+  datos_elecciones_raw %>% 
+  pivot_wider(id_cols = c(codigo_mun, mun, part),
+              names_from = partido, 
+              values_from = votos_partido)
+
+datos_elecciones <- 
+  datos_elecciones_abs %>%
+  left_join(datos_elecciones_pc, 
+            by = c("codigo_mun", "mun", "part"), 
+            suffix = c("_abs", "_pc"))
+  
+  
+# estrategia 2
+datos_elecciones <- 
+  datos_elecciones_raw %>% 
+  rename(abs = votos_partido, pc = votos_pc) %>% 
+  pivot_wider(id_cols = c(codigo_mun, mun, part), 
+              names_from = partido, 
+              values_from = c(abs, pc), 
+              names_glue = "{str_remove(.name, paste0(.value, '_'))}_{.value}")
+
+
+map_munis_w_votes <- 
+  map_munis %>% 
+  inner_join(datos_elecciones, 
+            by = c("id" = "codigo_mun"))
+
+map_munis %>% 
+  inner_join(datos_elecciones_raw,
+            by = c("id" = "codigo_mun")) %>% 
+  ggplot() + 
+  geom_sf(aes(fill = partido, 
+              alpha = votos_pc/100), 
+          color = "white", size = 0.1) + 
+  facet_wrap(~partido) + 
+  theme_minimal()
+
+st_write(map_munis_w_votes, "data/map_munis_w_votes.geojson")
+
+
+
+```
+
+
+Bucles que no tenemos que usar
+```{r}
+x <- c(1, 2, 3, 4)
+
+for (i in seq(1, length(x))){
+  print(paste("Estoy ejecutando el bucle con i = ", i))
+  x[i] <- x[i] + 10
+}
+
+
+flag <- T
+i <- 0
+while (flag == TRUE) {
+  
+  new_number <- runif(1, 0, 100)
+  
+  flag <- if_else(new_number > 50, 
+                  FALSE, 
+                  TRUE)
+  
+  i <- i + 1  
+}
+
+i 
+
+```
+
