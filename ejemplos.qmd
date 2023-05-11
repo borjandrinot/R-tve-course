@@ -132,14 +132,14 @@ dict_codigos %>%
 require(tidyverse)
 
 munis <- tribble(~mun, ~ccaa,
-          "Madrid", "Madrid",
-          "Barcelona", "Cataluña",
-          "Valencia", "C. Valenciana")
+                 "Madrid", "Madrid",
+                 "Barcelona", "Cataluña",
+                 "Valencia", "C. Valenciana")
 
 censo <- tribble(~mun, ~censo,
-          "Madrid", "3.2",
-          "Barcelona", "1.6",
-          "Alicante", "0.8")
+                 "Madrid", "3.2",
+                 "Barcelona", "1.6",
+                 "Alicante", "0.8")
 
 munis 
 censo 
@@ -252,9 +252,9 @@ munis %>%
 ```{r}
 
 datos <- tribble(~municipio, ~A, ~B, ~C,
-          "Madrid", "Sí", 3.2, 1,
-          "Barcelona", "No", 1.3, 2,
-          "Alicante", "No", 2, NA)
+                 "Madrid", "Sí", 3.2, 1,
+                 "Barcelona", "No", 1.3, 2,
+                 "Alicante", "No", 2, NA)
 
 munis %>%
   rename(municipio = mun) %>% 
@@ -314,7 +314,7 @@ add_3(5)
 mi_division <- function(numerador, denominador){
   
   output <- numerador / denominador
-
+  
   output %>% 
     round(2)
   
@@ -384,7 +384,7 @@ datos_provs <- prepare_totales_prov(data_raw)
 
 
 to_plot <- 
-datos_provs_filtered <- 
+  datos_provs_filtered <- 
   datos_provs
 rm(data_raw)
 gc()
@@ -423,8 +423,8 @@ datos_elecciones <-
   left_join(datos_elecciones_pc, 
             by = c("codigo_mun", "mun", "part"), 
             suffix = c("_abs", "_pc"))
-  
-  
+
+
 # estrategia 2
 datos_elecciones <- 
   datos_elecciones_raw %>% 
@@ -438,11 +438,11 @@ datos_elecciones <-
 map_munis_w_votes <- 
   map_munis %>% 
   inner_join(datos_elecciones, 
-            by = c("id" = "codigo_mun"))
+             by = c("id" = "codigo_mun"))
 
 map_munis %>% 
   inner_join(datos_elecciones_raw,
-            by = c("id" = "codigo_mun")) %>% 
+             by = c("id" = "codigo_mun")) %>% 
   ggplot() + 
   geom_sf(aes(fill = partido, 
               alpha = votos_pc/100), 
@@ -481,6 +481,198 @@ while (flag == TRUE) {
 }
 
 i 
+
+```
+
+
+Vamos a probar los map y el walk
+```{r}
+
+library(tidyverse)
+v <- c(1, 2, 3, 4, 5, 6)
+
+my_square <- function(p1){
+  p1^2  
+} 
+
+output <- map(v, my_square)
+class(output)
+
+output2 <- map_dbl(v, my_square)
+class(output2)
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+prepare_cummulative_prov <- function(p_data){
+  
+  p_data %>% 
+    pivot_longer(starts_with("num_"), 
+                 names_to = "indicador", 
+                 values_to = "valor") %>% 
+    group_by(fecha, provincia_iso, indicador) %>% 
+    summarise(valor = sum(valor)) %>% 
+    ungroup() %>% 
+    group_by(provincia_iso, indicador) %>%
+    arrange(fecha) %>% 
+    replace_na(list(valor = 0)) %>% 
+    mutate(valor = cumsum(valor)) %>% 
+    ungroup() %>%
+    pivot_wider(id_cols = c(provincia_iso, fecha),
+                names_from = indicador,
+                values_from  = valor)  
+}
+
+url <- 
+  "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"
+
+data_all <- 
+  read_csv(url, na = "") %>% 
+  prepare_cummulative_prov() 
+
+
+write_provs <- function(p_provincia_iso){
+  
+  file_name <- 
+    str_glue("data/data_provs/{str_to_lower(p_provincia_iso)}.csv")
+  
+  data_all %>% 
+    filter(provincia_iso == p_provincia_iso) %>% 
+    write_csv(file_name)
+  
+  
+}
+
+t0 <- Sys.time()
+data_all %>% 
+  distinct(provincia_iso) %>% 
+  pull(provincia_iso) %>% 
+  walk(write_provs)
+Sys.time() - t0
+
+library(fs)
+
+# paths <- dir_ls("data/data_provs", regexp = "/a.*\\.csv")
+paths <- dir_ls("data/data_provs")
+
+data_all_mapped <- map(paths, read_csv)
+
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: true
+
+data_all_mapped <- map_df(paths, 
+                          read_csv, 
+                          col_types = "cDnnnn")
+
+
+```
+
+¿Qué tengo que pensar antes de hacer un map?
+```{r}
+
+map_df(sobre_algo, haciendo_esto_otro)
+
+sobre_algo
+
+diseño haciendo_esto_otro con sobre_algo[1]
+
+```
+
+
+
+Web scraping
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+library(rvest)
+
+page_html <- read_html("https://datos.madrid.es/sites/v/index.jsp?vgnextoid=fa677996afc6f510VgnVCM1000001d4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD")
+
+class(page_html)
+
+links <- 
+  page_html %>% 
+  html_nodes("a.ico-csv") %>% 
+  html_attr("href") %>% 
+  paste0("https://datos.madrid.es", .)
+
+
+
+my_reader <- function(p_path){
+  
+  print(p_path)
+  
+  out <- tryCatch({
+    read_csv2(p_path)
+  },
+  error=function(cond) {
+    read_csv2(p_path, locale = locale(encoding = "windows-1252"))
+  }
+  )    
+  
+  return(out)
+  
+}
+
+all_data <- 
+  map_df(links, my_reader)
+
+```
+
+
+```{r}
+
+year_parser <- function(p_li){
+  
+  title <- 
+    p_li %>% 
+    html_nodes("p.info-title") %>% 
+    html_text()
+  
+  info <- 
+    p_li %>% 
+    html_nodes("span.info-file") %>% 
+    html_text()
+  
+  urls <- 
+    p_li %>% 
+    html_nodes("a") %>% 
+    html_attr("href")
+  
+  year_info <- 
+    tibble(title, urls, info) %>% 
+    separate(info, into = c("ext", "rest_info"), sep = ",") %>% 
+    separate(rest_info, into = c("size", "downloads"), sep = " - ") %>% 
+    mutate(ext = str_to_lower(ext),
+           downloads = downloads %>% 
+             str_remove_all(" descargas") %>% 
+             str_remove_all("\\.") %>% 
+             as.numeric())
+  
+  year_info
+  
+}
+
+
+all_years_info <- 
+  page_html %>% 
+  html_nodes(xpath = '//*[@id="readspeaker"]/div[3]/div/div[1]/ul') %>% 
+  html_children()
+
+
+info_years <- map_df(all_years_info, year_parser)
 
 ```
 
