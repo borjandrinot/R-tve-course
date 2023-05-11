@@ -676,3 +676,81 @@ info_years <- map_df(all_years_info, year_parser)
 
 ```
 
+
+Datawrapper
+```{r}
+
+library(DatawRappr)
+library(janitor)
+
+datawrapper_auth("8TbVVC5i4j6rkG0kgnGOJxQB2PbgDAKKoULokwjNoInrqvHYVa3aArZrwLnQgah5", 
+                 overwrite = T)
+
+my_new_folder <- 
+  dw_create_folder("Mis primeros gráficos")
+
+my_new_chart  <- 
+  dw_create_chart(title = "Un gráfico de puntos", 
+                  type = "d3-scatter-plot")
+
+iris %>% 
+  clean_names() %>% 
+  dw_data_to_chart(my_new_chart$id) 
+
+```
+
+
+```{r}
+
+# dw_delete_chart(my_new_chart$id)
+
+my_new_chart  <- 
+  dw_create_chart(title = "Un gráfico de puntos", 
+                  type = "d3-scatter-plot")
+
+iris %>% 
+  clean_names() %>% 
+  dw_data_to_chart(my_new_chart$id) 
+
+metadata <- 
+  dw_retrieve_chart_metadata(my_new_chart$id)
+
+visualize_to_change <- metadata$content$metadata$visualize
+visualize_to_change$`fixed-size` <- 40
+visualize_to_change$`base-color` <- "#ff0000"
+visualize_to_change$outlines <- TRUE
+visualize_to_change$`color-outline` <- "#ffffff"
+
+dw_edit_chart(my_new_chart$id, 
+              visualize = visualize_to_change,
+              axes = list(x = "petal_length", 
+                          y = "petal_width"))
+
+
+plantilla_anotacion <- metadata$content$metadata$visualize$`text-annotations`[[1]]
+plantilla_anotacion$
+mi_nueva_anotacion <- plantilla_anotacion
+mi_nueva_anotacion$x <- 3
+mi_nueva_anotacion$text <- "Hola!"
+mi_nueva_anotacion$color <- "#ff0000"
+
+mi_nueva_anotacion2 <- plantilla_anotacion
+mi_nueva_anotacion2$x <- 5
+mi_nueva_anotacion2$size <- 25
+mi_nueva_anotacion2$text <- "Adios!"
+mi_nueva_anotacion2$color <- "#0000ff"
+
+visualize_to_change <- metadata$content$metadata$visualize
+visualize_to_change$`text-annotations` <- 
+  list(mi_nueva_anotacion, mi_nueva_anotacion2)
+
+dw_edit_chart(my_new_chart$id, 
+              visualize = list("text-annotations" = list(mi_nueva_anotacion,
+                                                         mi_nueva_anotacion2)))
+
+
+```
+
+
+Para programar tareas en windows
+https://www.seancarney.ca/2020/10/11/scheduling-r-scripts-to-run-automatically-in-windows/
